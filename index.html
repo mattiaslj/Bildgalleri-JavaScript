@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<script src="style.css"></script>
+	<link rel="stylesheet" href="style.css">
 	<script src="JavaScript/bildgalleri.js"></script>
 
 	<title>Bildgalleri</title>
@@ -16,15 +16,15 @@
 				<input type="text" name="searchField" id="searchField" placeholder="search for a tag">
 			</tr>
 			<tr>
-				<button id="searchButton">Search</button>
+				<button id="searchButton" class="button">Search</button>
+			</tr>
+			<tr>
+				<button id="getRecentButton" class="button">Get recent images</button>
 			</tr>
 		</table>
-
-
-
-
 	</div>
 	<div id="mainContent"></div>
+	<button id="loadImages" class="button">Load more images</button>
 
 	<script src="JavaScript/flickrService.js"></script>
 	<script src="JavaScript/main.js"></script>
