@@ -3,7 +3,7 @@
     'use strict';
     (function () {
         bildgalleri.main = (function () {
-            
+
             // This prompts user to log in to flickr and allow full access for application
             bildgalleri.flickrService.getToken().then(function (result) {
                 /*
@@ -126,7 +126,6 @@
                                 // append image
                                 var src = document.getElementById("originalPhoto");
                                 src.appendChild(temp);
-                                console.log(jsonObj[key].owner)
                             };
                         }());
                     }

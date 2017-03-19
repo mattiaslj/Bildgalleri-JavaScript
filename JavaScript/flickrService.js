@@ -5,14 +5,13 @@
         var key = "92217f00479cdc382a7c4de5ef0a8ec1";
         var secret = "98e6e56a3b566d95";
         var oauth_object;
-        //  var userId = '148752387@N03';
         var isSearch = false;
         var page = 0;
 
 
-		// return: Promise
-		// url: flicker api url
-		// httpMethod: 'POST' or 'GET'
+        // return: Promise
+        // url: flicker api url
+        // httpMethod: 'POST' or 'GET'
         var service = function (url, httpMethod) {
             return new Promise(resolve => {
                 var req = new XMLHttpRequest();
@@ -35,7 +34,7 @@
             });
         }
 
-		// return: Promise, gets users oauthObject from flickr
+        // return: Promise, gets users oauthObject from flickr
         var getToken = function () {
             return new Promise(resolve => {
                 // Make sure user is logged in
@@ -69,20 +68,37 @@
             });
         }
 
-		// prompts user to log into flickr
+        // prompts user to log into flickr
         var login = function () {
             var signatureString = bildgalleri.MD5.MD5(secret + 'api_key' + key + 'permsdelete');
             var apiLink = 'http://flickr.com/services/auth/?api_key=' + key + '&perms=delete&api_sig=' + signatureString;
             return apiLink;
         }
 
-		// returns users galleries
+        var addPhotoToGallery = function (galleryId, photoId) {
+            console.log('gal = ' + galleryId + '         pho : ' + photoId)
+            var method = 'flickr.galleries.addPhoto';
+            var httpMethod = 'POST';
+            var token;
+            var userId = oauth_object.auth.user.nsid;
+            token = oauth_object.auth.token._content;
+            var api_sig = bildgalleri.MD5.MD5(secret + 'api_key' + '' + key + 'auth_token' + token + 'formatrest' + 'gallery_id' + galleryId + 'method' + method + 'photo_id' + photoId);
+            var url = 'https://api.flickr.com/services/rest/?method=' + method +
+                '&api_key=' + key +
+                '&format=rest' + 
+                '&gallery_id=' + galleryId +
+                '&photo_id=' + photoId +
+                '&auth_token=' + token +
+                '&api_sig=' + api_sig;
+            return service(url, httpMethod);
+        }
+
+        // returns users galleries
         var getGalleries = function () {
             var method = 'flickr.galleries.getList';
             var httpMethod = 'GET';
             var token;
             var userId = oauth_object.auth.user.nsid;
-            console.log(oauth_object.auth.token._content)
             token = oauth_object.auth.token._content;
             var api_sig = bildgalleri.MD5.MD5(secret + 'api_key' + '' + key + 'auth_token' + token + 'formatjson' + 'method' + method + 'nojsoncallback1');
             var url = 'https://api.flickr.com/services/rest/?method=' + method +
@@ -95,7 +111,7 @@
             return service(url, httpMethod);
         }
 
-		// create a user gallery - NOT implemented correctly yet
+        // create a user gallery - NOT implemented correctly yet
         var createGallery = function (title, description) {
             var httpMethod = 'POST'
             var url = 'https://api.flickr.com/services/rest/?method=flickr.galleries.create' +
@@ -110,7 +126,7 @@
             return service(url, httpMethod);
         }
 
-		// searches flickr based on tags, returns photos in json
+        // searches flickr based on tags, returns photos in json
         var search = function (tags) {
             var url;
             var method;
@@ -138,7 +154,7 @@
             return service(url, httpMethod);
         }
 
-		//  returns recently added photos in json
+        //  returns recently added photos in json
         var getRecent = function () {
             var url;
             var httpMethod = 'GET'
@@ -154,6 +170,7 @@
         }
 
         return {
+            addPhotoToGallery: addPhotoToGallery,
             getToken: getToken,
             login: login,
             getGalleries: getGalleries,
