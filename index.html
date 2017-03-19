@@ -2,44 +2,64 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<link rel="stylesheet" href="style.css">
-	<script src="JavaScript/bildgalleri.js"></script>
-
-	<title>Bildgalleri</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="JavaScript/bildgalleri.js"></script>
+    <script src="JavaScript/MD5.js"></script>
+    <title>Bildgalleri</title>
 </head>
 
 <body>
-	<div id="searchBar">
-		<table>
-			<tr>
-				<input type="text" name="searchField" id="searchField" placeholder="search for a tag">
-			</tr>
-			<tr>
-				<button id="searchButton" class="button">Search</button>
-			</tr>
-			<tr>
-				<button id="getRecentButton" class="button">Get recent images</button>
-			</tr>
-			<tr>
-				<button id="loadImages" class="button">Load more images</button>
-			</tr>
-			<tr>
-				<button id="back" class="button">Back</button>
-			</tr>
-		</table>
-	</div>
-	<div id="mainContent">
-		<div id="photos">
-		</div>
+    <div id="searchBar">
+        <table>
+            <tr>
+                <td>
+                    <input type="text" name="searchField" id="searchField" placeholder="search for a tag">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button id="searchButton" class="button">Search</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button id="getRecentButton" class="button">Get recent images</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button id="loadImages" class="button">Load more images</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button id="back" class="button">Back</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="mainContent">
+        <div id="photos">
+        </div>
 
-		<div id="originalPhoto">
-		</div> 
+        <div id="originalPhoto">
+            <button class="button" id="addToGallery">Add image to gallery</button>
+        </div>
 
-	</div>
+        <div id="gallery">
+            <h2> create a gallery or choose existing</h2>
+            <select id="galleries"></select>
+            <input type="text" id="galleryName" />
+            <button id="galleryButton">Add gallery</button>
+        </div>
 
-	<script src="JavaScript/flickrService.js"></script>
-	<script src="JavaScript/main.js"></script>
+    </div>
+
+    
+    <script src="JavaScript/flickrService.js"></script>
+    <script src="JavaScript/gallery.js"></script>
+    <script src="JavaScript/main.js"></script>
 </body>
 
 </html>
