@@ -75,8 +75,26 @@
             return apiLink;
         }
 
+        var deletePhoto = function (galleryId, primaryPhotoID ,photoIds) {
+            var method = 'flickr.galleries.editPhotos';
+            var httpMethod = 'POST';
+            var token;
+            var userId = oauth_object.auth.user.nsid;
+            token = oauth_object.auth.token._content;
+            var api_sig = bildgalleri.MD5.MD5(secret + 'api_key' + '' + key + 'auth_token' + token + 'gallery_id' +
+                galleryId + 'formatrest' + 'method' + method + 'photo_ids' + photoIds + 'primary_photo_id' + primaryPhotoID);
+            var url = 'https://api.flickr.com/services/rest/?method=' + method +
+                '&api_key=' + key +
+                '&format=rest' +
+                '&gallery_id=' + galleryId +
+                '&primary_photo_id=' + primaryPhotoID +
+                '&photo_ids =' + photoIds +
+                '&auth_token=' + token +
+                '&api_sig=' + api_sig;
+            return service(url, httpMethod);
+        }
+
         var addPhotoToGallery = function (galleryId, photoId) {
-            console.log('gal = ' + galleryId + '         pho : ' + photoId)
             var method = 'flickr.galleries.addPhoto';
             var httpMethod = 'POST';
             var token;
@@ -90,6 +108,19 @@
                 '&photo_id=' + photoId +
                 '&auth_token=' + token +
                 '&api_sig=' + api_sig;
+            return service(url, httpMethod);
+        }
+
+        // gets all photos from a users gallery
+        var getPhotos = function (galleryId) {
+            var url;
+            var httpMethod = 'GET'
+            var method = 'flickr.galleries.getPhotos';
+            url = 'https://api.flickr.com/services/rest/?method=' + method +
+                '&api key=' + key +
+                '&gallery_id=' + galleryId +
+                '&per_page=500&format=json&nojsoncallback=1';
+
             return service(url, httpMethod);
         }
 
@@ -111,9 +142,24 @@
             return service(url, httpMethod);
         }
 
-        // create a user gallery - NOT implemented correctly yet
+        // creates a gallery
         var createGallery = function (title, description) {
-            var httpMethod = 'POST'
+            var method = 'flickr.galleries.create';
+            var httpMethod = 'POST';
+            var token;
+            var userId = oauth_object.auth.user.nsid;
+            token = oauth_object.auth.token._content;
+            var api_sig = bildgalleri.MD5.MD5(secret + 'api_key' + '' + key + 'auth_token' + token + 'description' + description + 'formatrest' + 'method' + method + 'title' + title);
+            var url = 'https://api.flickr.com/services/rest/?method=' + method +
+                '&api_key=' + key +
+                '&format=rest' +
+                '&title=' + title +
+                '&description=' + description +
+                '&auth_token=' + token +
+                '&api_sig=' + api_sig;
+            return service(url, httpMethod);
+
+
             var url = 'https://api.flickr.com/services/rest/?method=flickr.galleries.create' +
 				'&api_key=' + key +
 				'&title=' + title +
@@ -170,6 +216,8 @@
         }
 
         return {
+            deletePhoto: deletePhoto,
+            getPhotos: getPhotos,
             addPhotoToGallery: addPhotoToGallery,
             getToken: getToken,
             login: login,
