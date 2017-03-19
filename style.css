@@ -1,5 +1,8 @@
 body {
     background-color: #D3D3D3;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 0px;
 }
 
 .button{
@@ -11,4 +14,20 @@ body {
     text-align: center;
     text-decoration: none;
     font-size: 16px;
+}
+
+.container{
+    display: inline;
+}
+
+#searchBar{
+    margin-top: 0px;
+    position: fixed;
+    top: 0;
+    background-color: #D3D3D3;
+    width: 100%;
+}
+
+#mainContent{
+    margin-top: 40px;
 }
